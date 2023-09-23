@@ -50,9 +50,10 @@ function App() {
       parseFloat(displayCount[2])
     );
 
-    if (result === "bruh") {
+    if (result === "nope") {
+      alert('bruh')
       setDisplay([]);
-      setTimeout(() => setDisplayMessage(""), 0);
+      console.log(displayCount)
       return;
     }
 
