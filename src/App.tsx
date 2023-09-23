@@ -27,13 +27,16 @@ function App() {
       return alert("error!");
     }
     if (displayCount.length === 3) {
-      console.log(
-        calcNumbers(
+        const result: string = calcNumbers(
           parseInt(displayCount[0]),
           displayCount[1],
           parseInt(displayCount[2])
-        )
-      );
+        );
+        if (result.startsWith("Alert: ")) {
+          setDisplay([]);
+        } else {
+          setDisplay([result, symbolValue]);
+        }
     } else {
       setDisplay((prevDisplay) => [prevDisplay[0], symbolValue]);
       console.log(displayCount);
