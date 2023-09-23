@@ -6,7 +6,8 @@ import calcNumbers from "./components/calcNumbers";
 
 function App() {
   const [displayCount, setDisplay] = useState<Array<string>>([]);
-  const [displayMessage, setDisplayMessage] = useState<string>("Enter Calculations");
+  const [displayMessage, setDisplayMessage] =
+    useState<string>("Enter Calculations");
 
   useEffect(() => {
     if (displayCount.length === 0) {
@@ -28,6 +29,7 @@ function App() {
         prevDisplay[prevDisplay.length - 1] + numberValue,
       ]);
     }
+    console.log(displayCount);
   };
 
   const showSymbol = (symbolValue: string) => {
@@ -41,16 +43,19 @@ function App() {
     }
   };
 
-  const runCalculations = (symbolValue: string) => {
+  const runCalculations = async (symbolValue: string) => {
     const result: string = calcNumbers(
-      parseInt(displayCount[0]),
+      parseFloat(displayCount[0]),
       displayCount[1],
-      parseInt(displayCount[2])
+      parseFloat(displayCount[2])
     );
-    if (result.includes("bruh")) {
+
+    if (result === "bruh") {
       setDisplay([]);
       setTimeout(() => setDisplayMessage(""), 0);
+      return;
     }
+
     if (symbolValue === "=") {
       setDisplay([result]);
     } else {
@@ -72,13 +77,23 @@ function App() {
   };
 
   const handleDotClick = () => {
-    if (displayCount.length === 2){alert('error')}
-    if (displayCount.length === 0 || displayCount.length === 1){setDisplay((prevDisplay) => [...prevDisplay, "."]);}
-    else { setDisplay((prevDisplay) => [
-      ...prevDisplay.slice(0, -1),
-      prevDisplay[prevDisplay.length - 1] + ".",
-    ]);}
-    console.log(displayCount)
+    if (displayCount.length === 2) {
+      alert("error");
+    } else if (
+      displayCount.length === 0 ||
+      isNaN(Number(displayCount[displayCount.length - 1]))
+    ) {
+      setDisplay((prevDisplay) => [...prevDisplay, "0."]);
+    }
+    if (String(displayCount[displayCount.length - 1]).includes(".")) {
+      return alert("error");
+    } else {
+      setDisplay((prevDisplay) => [
+        ...prevDisplay.slice(0, -1),
+        prevDisplay[prevDisplay.length - 1] + ".",
+      ]);
+    }
+    console.log(displayCount);
   };
 
   return (
