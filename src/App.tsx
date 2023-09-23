@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import GlobalStyles from "./components/styles/global";
 import NumberButtons from "./components/numberButtons";
 import SymbolButtons from "./components/symbolButton";
@@ -6,7 +6,7 @@ import calcNumbers from "./components/calcNumbers";
 
 function App() {
   const [displayCount, setDisplay] = useState<Array<string>>([]);
-  const [displayMessage, setDisplayMessage] = useState("Enter Calculations");
+  const [displayMessage, setDisplayMessage] = useState<string>("Enter Calculations");
 
   useEffect(() => {
     if (displayCount.length === 0) {
@@ -28,7 +28,6 @@ function App() {
         prevDisplay[prevDisplay.length - 1] + numberValue,
       ]);
     }
-    console.log(displayCount);
   };
 
   const showSymbol = (symbolValue: string) => {
@@ -36,23 +35,51 @@ function App() {
       return alert("error!");
     }
     if (displayCount.length === 3) {
-      const result: string = calcNumbers(
-        parseInt(displayCount[0]),
-        displayCount[1],
-        parseInt(displayCount[2])
-      );
-      if (result.startsWith("Alert: ")) {
-        setDisplay([]);
-        setTimeout(() => setDisplayMessage(''), 0);
-      } else {
-        setDisplay([result, symbolValue]);
-      }
+      runCalculations(symbolValue);
     } else {
       setDisplay((prevDisplay) => [prevDisplay[0], symbolValue]);
-      console.log(displayCount);
     }
   };
-  
+
+  const runCalculations = (symbolValue: string) => {
+    const result: string = calcNumbers(
+      parseInt(displayCount[0]),
+      displayCount[1],
+      parseInt(displayCount[2])
+    );
+    if (result.includes("bruh")) {
+      setDisplay([]);
+      setTimeout(() => setDisplayMessage(""), 0);
+    }
+    if (symbolValue === "=") {
+      setDisplay([result]);
+    } else {
+      setDisplay([result, symbolValue]);
+    }
+  };
+
+  const handleEqualsClick = () => {
+    if (isNaN(Number(displayCount[3]))) {
+      runCalculations("=");
+    } else {
+      alert("error");
+    }
+  };
+
+  const handleClearClick = () => {
+    setDisplay([]);
+    setDisplayMessage("Enter Calculations");
+  };
+
+  const handleDotClick = () => {
+    if (displayCount.length === 2){alert('error')}
+    if (displayCount.length === 0 || displayCount.length === 1){setDisplay((prevDisplay) => [...prevDisplay, "."]);}
+    else { setDisplay((prevDisplay) => [
+      ...prevDisplay.slice(0, -1),
+      prevDisplay[prevDisplay.length - 1] + ".",
+    ]);}
+    console.log(displayCount)
+  };
 
   return (
     <>
@@ -60,7 +87,9 @@ function App() {
       <div>{displayMessage}</div>
       <NumberButtons onClick={showNumber} />
       <SymbolButtons onClick={showSymbol} />
-      <button>C</button>
+      <button onClick={handleEqualsClick}>=</button>
+      <button onClick={handleClearClick}>C</button>
+      <button onClick={handleDotClick}>.</button>
     </>
   );
 }
