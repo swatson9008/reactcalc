@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import GlobalStyles from "./components/styles/global";
 import NumberButtons from "./components/numberButtons";
 import SymbolButtons from "./components/symbolButton";
@@ -29,7 +29,6 @@ function App() {
         prevDisplay[prevDisplay.length - 1] + numberValue,
       ]);
     }
-    console.log(displayCount);
   };
 
   const showSymbol = (symbolValue: string) => {
@@ -43,7 +42,7 @@ function App() {
     }
   };
 
-  const runCalculations = async (symbolValue: string) => {
+  const runCalculations = (symbolValue: string) => {
     const result: string = calcNumbers(
       parseFloat(displayCount[0]),
       displayCount[1],
@@ -53,7 +52,6 @@ function App() {
     if (result === "nope") {
       alert('bruh')
       setDisplay([]);
-      console.log(displayCount)
       return;
     }
 
@@ -94,8 +92,20 @@ function App() {
         prevDisplay[prevDisplay.length - 1] + ".",
       ]);
     }
-    console.log(displayCount);
   };
+
+  const handleBackClick = () => {
+    if (displayCount.length === 0) {
+      return alert('error');
+    } else {
+      const latestIndex = displayCount.length - 1;
+      const updatedValue = displayCount[latestIndex].slice(0, -1);
+      const updatedDisplay = [...displayCount];
+      updatedDisplay[latestIndex] = updatedValue;
+      setDisplay(updatedDisplay);
+    }
+  };
+  
 
   return (
     <>
@@ -106,6 +116,7 @@ function App() {
       <button onClick={handleEqualsClick}>=</button>
       <button onClick={handleClearClick}>C</button>
       <button onClick={handleDotClick}>.</button>
+      <button onClick={handleBackClick}>↵</button>
     </>
   );
 }
