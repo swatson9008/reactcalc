@@ -5,7 +5,8 @@ import SymbolButtons from "./components/symbolButton";
 import calcNumbers from "./components/calcNumbers";
 
 function App() {
-  const [displayCount, setDisplay] = useState<Array<string>>([]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [displayCount, setDisplay] = useState<Array<any >>([]);
   const [displayMessage, setDisplayMessage] =
     useState<string>("Enter Calculations");
 
@@ -43,7 +44,7 @@ function App() {
   };
 
   const runCalculations = (symbolValue: string) => {
-    const result: string = calcNumbers(
+    const result: string | undefined = calcNumbers(
       parseFloat(displayCount[0]),
       displayCount[1],
       parseFloat(displayCount[2])
@@ -110,13 +111,16 @@ function App() {
   return (
     <>
       <GlobalStyles />
-      <div>{displayMessage}</div>
-      <NumberButtons onClick={showNumber} />
-      <SymbolButtons onClick={showSymbol} />
-      <button onClick={handleEqualsClick}>=</button>
-      <button onClick={handleClearClick}>C</button>
-      <button onClick={handleDotClick}>.</button>
-      <button onClick={handleBackClick}>↵</button>
+      <div className="mainContainer">
+        <div className="displayMessage">{displayMessage}</div>
+        <div className="symbolButtons"><SymbolButtons onClick={showSymbol} /></div>
+        <div className="numButtons"><NumberButtons onClick={showNumber} /></div>
+        <div className="handleClicks">
+        <button onClick={handleEqualsClick}>=</button>
+        <button onClick={handleClearClick}>C</button>
+        <button onClick={handleDotClick}>.</button>
+        <button onClick={handleBackClick}>↵</button></div>
+      </div>
     </>
   );
 }

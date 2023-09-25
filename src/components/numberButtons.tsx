@@ -1,4 +1,5 @@
 import React from 'react';
+import { NumButtons } from './styles/numberButtons.styled';
 
 interface NumberButtonsProps {
   onClick: (numberValue: string) => void;
@@ -10,9 +11,8 @@ const NumberButtons: React.FC<NumberButtonsProps> = ({ onClick }) => {
   return (
     <div>
       {numbers.map((number) => (
-        <button key={number} onClick={() => onClick(number)}>
-          {number}
-        </button>
+        <NumButtons key={number} onClick={() => onClick(number)}>
+          {number}</NumButtons>
       ))}
     </div>
   );
