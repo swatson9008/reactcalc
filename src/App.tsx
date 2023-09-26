@@ -89,17 +89,20 @@ function App() {
   };
 
   const handleDotClick = () => {
-    if (displayCount.length === 2) {
-      alert("error");
-    } else if (
-      displayCount.length === 0 ||
-      isNaN(Number(displayCount[displayCount.length - 1]))
+    if (
+      displayCount.length === 0 || // Only add "0." if there are no items
+      (displayCount.length === 1 && isNaN(Number(displayCount[0]))) // Only add "0." if the first item is not a valid number
+    ) {
+      setDisplay((prevDisplay) => [...prevDisplay, "0."]);
+    } 
+
+    else if (
+      displayCount.length === 2  && !String(displayCount[displayCount.length - 1]).includes(".")
     ) {
       setDisplay((prevDisplay) => [...prevDisplay, "0."]);
     }
-    if (String(displayCount[displayCount.length - 1]).includes(".")) {
-      return alert("error");
-    } else {
+    else if (!String(displayCount[displayCount.length - 1]).includes(".")) {
+      // Add "." only if the last item does not already include "."
       setDisplay((prevDisplay) => [
         ...prevDisplay.slice(0, -1),
         prevDisplay[prevDisplay.length - 1] + ".",
