@@ -6,7 +6,7 @@ interface SymbolButtonProps {
 }
 
 const SymbolButtons: React.FC<SymbolButtonProps> = ({ onClick }) => {
-  const symbols: string[] = ["+", "-", "/", "*"];
+  const symbols: string[] = ["+", "-", "÷", "x"];
 
   return (
     <div className='symbolSheet'>
