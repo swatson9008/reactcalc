@@ -1,13 +1,17 @@
 import { createGlobalStyle } from 'styled-components';
 
-const GlobalStyles = createGlobalStyle`
+interface GlobalStyleProps { 
+  dark: boolean; 
+}
+
+const GlobalStyles = createGlobalStyle<GlobalStyleProps>`
   body {
     margin: 15px;
     display: flex;
     justify-content: center; 
     align-items: center;
     height: 90vh;
-    background-color: #eee;
+    background-color: ${(props) => (props.dark ? 'gray' : 'white')};
   }
 
   .mainContainer {
@@ -36,6 +40,12 @@ const GlobalStyles = createGlobalStyle`
       grid-column-gap: 1em;
       grid-row-gap: 1em;
       margin: 10px;
+  }
+
+  .DMSwitch {
+    display: flex;
+    justify-content: center;
+    margin: 0.5em;
   }
 
   @media(max-width: 1199px){

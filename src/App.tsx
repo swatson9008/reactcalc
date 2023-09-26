@@ -7,12 +7,20 @@ import { StyledMessage } from "./components/styles/displayMessage.styled";
 import { StyledClicks } from "./components/styles/handleclicks.styled";
 import { StyledHandles } from "./components/styles/handleButtons.styled";
 import { StyledEquals } from "./components/styles/handleButtons.styled";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { DarkModeSwitch } from "react-toggle-dark-mode";
 
 function App() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [displayCount, setDisplay] = useState<Array<any >>([]);
+  const [displayCount, setDisplay] = useState<Array<any>>([]);
   const [displayMessage, setDisplayMessage] =
     useState<string>("Enter Calculations");
+
+  const [isDarkMode, setDarkMode] = useState(false);
+
+  const toggleDarkMode = (checked: boolean) => {
+    setDarkMode(checked);
+  };
 
   useEffect(() => {
     if (displayCount.length === 0) {
@@ -55,7 +63,7 @@ function App() {
     );
 
     if (result === "nope") {
-      alert('bruh')
+      alert("bruh");
       setDisplay([]);
       return;
     }
@@ -101,7 +109,7 @@ function App() {
 
   const handleBackClick = () => {
     if (displayCount.length === 0) {
-      return alert('error');
+      return alert("error");
     } else {
       const latestIndex = displayCount.length - 1;
       const updatedValue = displayCount[latestIndex].slice(0, -1);
@@ -110,20 +118,31 @@ function App() {
       setDisplay(updatedDisplay);
     }
   };
-  
 
   return (
     <>
-      <GlobalStyles />
+      <GlobalStyles dark={isDarkMode} />
+      <div className="DMSwitch">
+        <DarkModeSwitch
+          style={{ marginTop: "2em" }}
+          checked={isDarkMode}
+          onChange={toggleDarkMode}
+          size={40}
+        />
+      </div>
       <div className="mainContainer">
         <StyledMessage>{displayMessage}</StyledMessage>
-        <div className="symbolButtons"><SymbolButtons onClick={showSymbol} /></div>
-        <div className="numButtons"><NumberButtons onClick={showNumber} /></div>
+        <div className="symbolButtons">
+          <SymbolButtons onClick={showSymbol} />
+        </div>
+        <div className="numButtons">
+          <NumberButtons onClick={showNumber} />
+        </div>
         <StyledClicks>
-        <StyledHandles onClick={handleClearClick}>C</StyledHandles>
-        <StyledHandles onClick={handleDotClick}>.</StyledHandles>
-        <StyledHandles onClick={handleBackClick}>↵</StyledHandles>
-        <StyledEquals onClick={handleEqualsClick}>=</StyledEquals>
+          <StyledHandles onClick={handleClearClick}>C</StyledHandles>
+          <StyledHandles onClick={handleDotClick}>.</StyledHandles>
+          <StyledHandles onClick={handleBackClick}>↵</StyledHandles>
+          <StyledEquals onClick={handleEqualsClick}>=</StyledEquals>
         </StyledClicks>
       </div>
     </>
