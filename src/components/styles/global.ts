@@ -11,9 +11,8 @@ const GlobalStyles = createGlobalStyle`
   }
 
   .mainContainer {
-    width: 20vw;
     height: fit-content;
- 
+    background-color: #9e9e9e;
     justify-content: space-between;
     flex-direction: column;
     align-items: center;
@@ -25,13 +24,14 @@ const GlobalStyles = createGlobalStyle`
       grid-template-rows: repeat(2, 1fr);
       grid-column-gap: 1em;
       grid-row-gap: 1em;
+      margin: 15px;
       
   }
 
   @media(max-width: 600px){
 
     .mainContainer {
-      width: 95vw;
+      width: 100vw;
     }
 
   }
