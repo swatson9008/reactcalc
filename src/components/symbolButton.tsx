@@ -1,4 +1,5 @@
 import React from 'react';
+import { SymbolButtonsStyle } from './styles/symbolButtons.styled';
 
 interface SymbolButtonProps {
   onClick: (symbolValue: string) => void;
@@ -8,11 +9,11 @@ const SymbolButtons: React.FC<SymbolButtonProps> = ({ onClick }) => {
   const symbols: string[] = ["+", "-", "/", "*"];
 
   return (
-    <div>
+    <div className='symbolSheet'>
       {symbols.map((symbol) => (
-        <button key={symbol} onClick={() => onClick(symbol)}>
+        <SymbolButtonsStyle key={symbol} onClick={() => onClick(symbol)}>
           {symbol}
-        </button>
+        </SymbolButtonsStyle>
       ))}
     </div>
   );
