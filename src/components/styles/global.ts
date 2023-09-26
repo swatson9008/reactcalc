@@ -6,11 +6,10 @@ interface GlobalStyleProps {
 
 const GlobalStyles = createGlobalStyle<GlobalStyleProps>`
   body {
-    margin: 15px;
     display: flex;
     justify-content: center; 
     align-items: center;
-    height: 90vh;
+    height: 100vh;
     background-color: ${(props) => (props.dark ? '#2b2b2b' : '#d9d9d9')};
   }
 

@@ -124,7 +124,7 @@ function App() {
       <GlobalStyles dark={isDarkMode} />
       <div className="DMSwitch">
         <DarkModeSwitch
-          style={{ marginTop: "2em" }}
+          style={{ marginTop: "0" }}
           checked={isDarkMode}
           onChange={toggleDarkMode}
           size={40}
