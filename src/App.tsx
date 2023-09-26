@@ -4,6 +4,7 @@ import NumberButtons from "./components/numberButtons";
 import SymbolButtons from "./components/symbolButton";
 import calcNumbers from "./components/calcNumbers";
 import { StyledMessage } from "./components/styles/displayMessage.styled";
+import { StyledClicks } from "./components/styles/handleclicks.styled";
 
 function App() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -116,11 +117,11 @@ function App() {
         <StyledMessage>{displayMessage}</StyledMessage>
         <div className="symbolButtons"><SymbolButtons onClick={showSymbol} /></div>
         <div className="numButtons"><NumberButtons onClick={showNumber} /></div>
-        <div className="handleClicks">
+        <StyledClicks>
         <button onClick={handleEqualsClick}>=</button>
         <button onClick={handleClearClick}>C</button>
         <button onClick={handleDotClick}>.</button>
-        <button onClick={handleBackClick}>↵</button></div>
+        <button onClick={handleBackClick}>↵</button></StyledClicks>
       </div>
     </>
   );

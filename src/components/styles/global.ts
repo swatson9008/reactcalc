@@ -16,7 +16,8 @@ const GlobalStyles = createGlobalStyle`
     justify-content: space-between;
     flex-direction: column;
     align-items: center;
-    padding: 10px; 
+    padding-top: 10px; 
+    padding-bottom: 10px;
   }
 
   .numSheet {
