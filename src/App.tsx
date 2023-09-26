@@ -3,6 +3,7 @@ import GlobalStyles from "./components/styles/global";
 import NumberButtons from "./components/numberButtons";
 import SymbolButtons from "./components/symbolButton";
 import calcNumbers from "./components/calcNumbers";
+import { StyledMessage } from "./components/styles/displayMessage.styled";
 
 function App() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -112,7 +113,7 @@ function App() {
     <>
       <GlobalStyles />
       <div className="mainContainer">
-        <div className="displayMessage">{displayMessage}</div>
+        <StyledMessage>{displayMessage}</StyledMessage>
         <div className="symbolButtons"><SymbolButtons onClick={showSymbol} /></div>
         <div className="numButtons"><NumberButtons onClick={showNumber} /></div>
         <div className="handleClicks">

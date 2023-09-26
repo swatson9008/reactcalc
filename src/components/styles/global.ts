@@ -16,6 +16,7 @@ const GlobalStyles = createGlobalStyle`
     justify-content: space-between;
     flex-direction: column;
     align-items: center;
+    padding: 10px; 
   }
 
   .numSheet {
@@ -36,7 +37,15 @@ const GlobalStyles = createGlobalStyle`
       margin: 10px;
   }
 
-  @media(max-width: 600px){
+  @media(max-width: 1199px){
+
+    .mainContainer {
+      width:40vw;
+    }
+
+  }
+
+  @media(max-width: 500px){
 
     .mainContainer {
       width: 100vw;
@@ -44,7 +53,7 @@ const GlobalStyles = createGlobalStyle`
 
   }
 
-  @media(min-width: 601px){
+  @media(min-width: 1200px){
     .mainContainer {
       width: 20vw;
     }
