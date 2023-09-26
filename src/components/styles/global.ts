@@ -28,6 +28,14 @@ const GlobalStyles = createGlobalStyle`
       
   }
 
+  .symbolSheet {
+    display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-column-gap: 1em;
+      grid-row-gap: 1em;
+      margin: 10px;
+  }
+
   @media(max-width: 600px){
 
     .mainContainer {
