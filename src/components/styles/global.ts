@@ -11,12 +11,12 @@ const GlobalStyles = createGlobalStyle<GlobalStyleProps>`
     justify-content: center; 
     align-items: center;
     height: 90vh;
-    background-color: ${(props) => (props.dark ? 'gray' : 'white')};
+    background-color: ${(props) => (props.dark ? '#2b2b2b' : '#d9d9d9')};
   }
 
   .mainContainer {
     height: fit-content;
-    background-color: #9e9e9e;
+    background-color: ${(props) => (props.dark ? '#5e5e5e' : '#9e9e9e')};
     justify-content: space-between;
     flex-direction: column;
     align-items: center;

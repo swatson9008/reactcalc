@@ -131,12 +131,12 @@ function App() {
         />
       </div>
       <div className="mainContainer">
-        <StyledMessage>{displayMessage}</StyledMessage>
+        <StyledMessage dark={isDarkMode}>{displayMessage}</StyledMessage>
         <div className="symbolButtons">
           <SymbolButtons onClick={showSymbol} />
         </div>
         <div className="numButtons">
-          <NumberButtons onClick={showNumber} />
+          <NumberButtons onClick={showNumber} dark={isDarkMode} />
         </div>
         <StyledClicks>
           <StyledHandles onClick={handleClearClick}>C</StyledHandles>
