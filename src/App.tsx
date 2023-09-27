@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import GlobalStyles from "./components/styles/global";
 import NumberButtons from "./components/numberButtons";
 import SymbolButtons from "./components/symbolButton";
@@ -7,15 +7,11 @@ import { StyledMessage } from "./components/styles/displayMessage.styled";
 import { StyledClicks } from "./components/styles/handleclicks.styled";
 import { StyledHandles } from "./components/styles/handleButtons.styled";
 import { StyledEquals } from "./components/styles/handleButtons.styled";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 
 function App() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [displayCount, setDisplay] = useState<Array<any>>([]);
-  const [displayMessage, setDisplayMessage] =
-    useState<string>("Enter Calculations");
-
+  const [displayCount, setDisplay] = useState<Array<string | number>>([]);
+  const [displayMessage, setDisplayMessage] = useState<string>("Enter Calculations");
   const [isDarkMode, setDarkMode] = useState(false);
 
   const toggleDarkMode = (checked: boolean) => {
@@ -33,7 +29,8 @@ function App() {
   const showNumber = (numberValue: string) => {
     if (
       displayCount.length === 0 ||
-      isNaN(Number(displayCount[displayCount.length - 1]))
+      (typeof displayCount[displayCount.length - 1] === "string" &&
+        isNaN(Number(displayCount[displayCount.length - 1])))
     ) {
       setDisplay((prevDisplay) => [...prevDisplay, numberValue]);
     } else {
@@ -57,9 +54,9 @@ function App() {
 
   const runCalculations = (symbolValue: string) => {
     const result: string | undefined = calcNumbers(
-      parseFloat(displayCount[0]),
-      displayCount[1],
-      parseFloat(displayCount[2])
+      parseFloat(displayCount[0] as string),
+      displayCount[1] as string,
+      parseFloat(displayCount[2] as string)
     );
 
     if (result === "nope") {
@@ -90,19 +87,22 @@ function App() {
 
   const handleDotClick = () => {
     if (
-      displayCount.length === 0 || // Only add "0." if there are no items
-      (displayCount.length === 1 && isNaN(Number(displayCount[0]))) // Only add "0." if the first item is not a valid number
+      displayCount.length === 0 ||
+      (displayCount.length === 1 &&
+        typeof displayCount[0] === "string" &&
+        isNaN(Number(displayCount[0])))
     ) {
       setDisplay((prevDisplay) => [...prevDisplay, "0."]);
-    } 
-
-    else if (
-      displayCount.length === 2  && !String(displayCount[displayCount.length - 1]).includes(".")
+    } else if (
+      displayCount.length === 2 &&
+      typeof displayCount[1] === "string" &&
+      !displayCount[1].includes(".")
     ) {
       setDisplay((prevDisplay) => [...prevDisplay, "0."]);
-    }
-    else if (!String(displayCount[displayCount.length - 1]).includes(".")) {
-      // Add "." only if the last item does not already include "."
+    } else if (
+      typeof displayCount[displayCount.length - 1] === "string" &&
+      !displayCount[displayCount.length - 1].includes(".")
+    ) {
       setDisplay((prevDisplay) => [
         ...prevDisplay.slice(0, -1),
         prevDisplay[prevDisplay.length - 1] + ".",
@@ -115,12 +115,58 @@ function App() {
       return alert("error");
     } else {
       const latestIndex = displayCount.length - 1;
-      const updatedValue = displayCount[latestIndex].slice(0, -1);
+      const updatedValue =
+        typeof displayCount[latestIndex] === "string"
+          ? displayCount[latestIndex].slice(0, -1)
+          : "";
       const updatedDisplay = [...displayCount];
       updatedDisplay[latestIndex] = updatedValue;
       setDisplay(updatedDisplay);
     }
   };
+
+  const handleKeyPress = useCallback((event: KeyboardEvent) => {
+    switch (event.key) {
+      case '0':
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9':
+        showNumber(event.key);
+        break;
+      case '+':
+      case '-':
+      case '*':
+      case '/':
+        showSymbol(event.key);
+        break;
+      case '=':
+      case 'Enter':
+        handleEqualsClick();
+        break;
+      case 'Backspace': 
+        handleBackClick();
+        break;
+      case '.':
+        handleDotClick();
+        break;
+      default:
+        break;
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showNumber, showSymbol, runCalculations, handleEqualsClick, handleBackClick, handleDotClick]);
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyPress);
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [handleKeyPress]);
 
   return (
     <>
