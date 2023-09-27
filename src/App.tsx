@@ -10,7 +10,8 @@ import { StyledEquals } from "./components/styles/handleButtons.styled";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 
 function App() {
-  const [displayCount, setDisplay] = useState<Array<string | number>>([]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [displayCount, setDisplay] = useState<Array<any>>([]);
   const [displayMessage, setDisplayMessage] = useState<string>("Enter Calculations");
   const [isDarkMode, setDarkMode] = useState(false);
 
@@ -88,9 +89,7 @@ function App() {
   const handleDotClick = () => {
     if (
       displayCount.length === 0 ||
-      (displayCount.length === 1 &&
-        typeof displayCount[0] === "string" &&
-        isNaN(Number(displayCount[0])))
+      (displayCount.length === 1 && typeof displayCount[0] === "string" && isNaN(Number(displayCount[0])))
     ) {
       setDisplay((prevDisplay) => [...prevDisplay, "0."]);
     } else if (
@@ -101,6 +100,7 @@ function App() {
       setDisplay((prevDisplay) => [...prevDisplay, "0."]);
     } else if (
       typeof displayCount[displayCount.length - 1] === "string" &&
+      !isNaN(Number(displayCount[displayCount.length - 1])) &&
       !displayCount[displayCount.length - 1].includes(".")
     ) {
       setDisplay((prevDisplay) => [
@@ -109,6 +109,7 @@ function App() {
       ]);
     }
   };
+  
 
   const handleBackClick = () => {
     if (displayCount.length === 0) {
@@ -117,7 +118,7 @@ function App() {
       const latestIndex = displayCount.length - 1;
       const updatedValue =
         typeof displayCount[latestIndex] === "string"
-          ? displayCount[latestIndex].slice(0, -1)
+          ? (displayCount[latestIndex] as string).slice(0, -1)
           : "";
       const updatedDisplay = [...displayCount];
       updatedDisplay[latestIndex] = updatedValue;
