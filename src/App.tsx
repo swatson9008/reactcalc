@@ -126,6 +126,7 @@ function App() {
   };
 
   const handleKeyPress = useCallback((event: KeyboardEvent) => {
+    console.log(event.key)
     switch (event.key) {
       case '0':
       case '1':
@@ -166,9 +167,9 @@ function App() {
   }, [showNumber, showSymbol, runCalculations, handleEqualsClick, handleBackClick, handleDotClick]);
 
   useEffect(() => {
-    window.addEventListener('keydown', handleKeyPress);
+    window.addEventListener('keyup', handleKeyPress);
     return () => {
-      window.removeEventListener('keydown', handleKeyPress);
+      window.removeEventListener('keyup', handleKeyPress);
     };
   }, [handleKeyPress]);
 
