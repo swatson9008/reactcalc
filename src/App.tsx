@@ -141,10 +141,14 @@ function App() {
         break;
       case '+':
       case '-':
-      case '*':
-      case '/':
         showSymbol(event.key);
         break;
+      case '*':
+        showSymbol("x");
+        break;
+      case '/':
+        showSymbol("÷");
+        break
       case '=':
       case 'Enter':
         handleEqualsClick();

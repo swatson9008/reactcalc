@@ -10,7 +10,7 @@ export const StyledMessage = styled.div<GlobalStyleProps>`
   padding: 20px;
   font-family: 'VT323', monospace;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 22px;
   letter-spacing: 1px; 
   margin: 10px;
   border-radius: 10px;
